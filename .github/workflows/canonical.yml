@@ -45,5 +45,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: deployment-verification
-          path: .deployment-artifacts/
+          path: build/deployment-artifacts/
           if-no-files-found: warn
