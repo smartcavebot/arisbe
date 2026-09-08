@@ -24,7 +24,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_ARTIFACT_DIR = Path(".deployment-artifacts")
+DEFAULT_ARTIFACT_DIR = Path("build/deployment-artifacts")
 
 
 class BootstrapFailure(RuntimeError):
