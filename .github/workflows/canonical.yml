@@ -25,19 +25,25 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Install Python deps
-        run: uv sync --extra dev --extra web
-
-      - name: Install Node.js (for ELK layout worker)
+      - name: Set up Node.js (for ELK layout worker)
         uses: actions/setup-node@v5
         with:
           node-version: '22'
 
-      - name: Install Node deps (elkjs)
-        run: npm install
-
-      - name: Install Playwright Chromium (for the e2e suites)
-        run: uv run playwright install --with-deps chromium
+      # This is the same environment-construction command documented for users.
+      # CI must not carry private uv/npm setup knowledge that can mask a broken
+      # clean install. --ci additionally installs Chromium and proves a real SVG
+      # render through the browser, retaining a screenshot and JSON receipt.
+      - name: Bootstrap and prove deployment
+        run: python tools/bootstrap.py --ci
 
       - name: Run full test suite
         run: uv run pytest tests/ -q
+
+      - name: Upload deployment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-verification
+          path: build/deployment-artifacts/
+          if-no-files-found: warn

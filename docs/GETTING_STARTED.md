@@ -37,16 +37,29 @@ matters here with a pen.
 ## 1. The shared five minutes (everyone starts here)
 
 **You do not need any logic or mathematics to begin.** You need a terminal and a
-browser.
+browser. The runtime prerequisites are **Python 3.12+**, **uv**, and **Node.js with
+npm** (CI uses Node 22). Node is required by the production ELK graph-layout worker;
+it is not an optional development tool.
 
 ### Run it
 
-**uv** manages the dependencies (Python 3.12):
+From the repository root, run the canonical bootstrap:
 
 ```bash
-uv sync --extra dev --extra web         # one-time setup (the web extra carries FastAPI/uvicorn)
+python tools/bootstrap.py
 uv run uvicorn --app-dir src web_api.main:app --reload --port 8000
 ```
+
+The bootstrap replays both committed dependency graphs (`uv.lock` and
+`package-lock.json`) and then runs a deployment verifier that exercises the real
+Python → Node → ELK layout path. If setup is interrupted or a local dependency is
+removed, rerun the same command; to diagnose without installing anything, run
+`uv run python tools/verify_deployment.py`.
+
+For the full browser-level deployment proof, including a real Chromium render and
+screenshot, run `python tools/bootstrap.py --with-browser`. The canonical CI uses
+the same bootstrap contract. See [DEPLOYMENT_HARDENING.md](DEPLOYMENT_HARDENING.md)
+for the failure that motivated this gate and the reproduction methodology.
 
 Then open <http://localhost:8000/> and click **"New here?"**. The in-app **primer**
 draws a handful of first graphs with the real engine (a scroll, an empty cut) and
@@ -209,7 +222,8 @@ notations** and stays the same proposition everywhere.
 
 **How to try to break it.** You can test the claims above from a clean checkout,
 and a failing run counts as a finding the project wants. Three commands (all from
-the repository root, after `uv sync --extra dev --extra web`; verified 2026-07-27):
+the repository root, after `python tools/bootstrap.py`; deployment contract added
+2026-09-08):
 
 1. **The mathematical core** — the Dau calculus, closure validation,
    isomorphism, and the Beta/propositional proof exercises (132 tests; a
