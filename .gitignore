@@ -16,7 +16,6 @@ node_modules/
 clean_egi_output.json
 corpus_conversion_results.json
 corpus_demo_results.json
-.deployment-artifacts/
 
 debug_output.txt
 
@@ -160,8 +159,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs
-# https://www.mkdocs.org/
+# mkdocs documentation
 /site
 
 # mypy
@@ -179,10 +177,9 @@ dmypy.json
 cython_debug/
 
 # PyCharm
-#  JetBrains specific template is maintained by JetBrains in a separate JetBrains.gitignore that can
-#  be found at https://github.com/joeblau/gitignore.io/blob/master/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this project gitignore.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be added to the global gitignore or merged into this project gitignore.  For a PyCharm
+#  project, it is recommended to comment the following line:
 #.idea/
 
 # Obsolete documentation (archived to prevent context contamination)
