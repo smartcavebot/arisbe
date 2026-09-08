@@ -88,7 +88,7 @@ checkout:
 - a SHA-256 receipt for the npm lockfile
 
 It also records the actual Node and npm versions. CI retains this as
-`.deployment-artifacts/deployment-verification.json`.
+`build/deployment-artifacts/deployment-verification.json`.
 
 This detects a class of failures that feature tests can obscure: missing files,
 lockfile drift, or a package-manager graph that was never constructed.
@@ -130,7 +130,7 @@ existing Agon E2E suite, requests interpretation, and requires:
 The test takes a full-page screenshot in a `finally` block when
 `ARISBE_DEPLOYMENT_SCREENSHOT` is set, so CI retains visual evidence on both
 success and most browser-level failures. The canonical artifact is
-`.deployment-artifacts/deployment-smoke.png`.
+`build/deployment-artifacts/deployment-smoke.png`.
 
 This closes the original observable symptom: an install is not considered complete
 merely because the web server starts; it must actually render a graph through the
